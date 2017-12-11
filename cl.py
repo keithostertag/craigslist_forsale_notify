@@ -29,30 +29,34 @@ areas = "&sort=rel&searchNearby=2&nearbyArea=229&nearbyArea=342&nearbyArea=" \
     "35&nearbyArea=227&nearbyArea=45&nearbyArea=133&nearbyArea=673"
 
 request_object = requests.get('https://louisville.craigslist.org/search/sss?query=' + search_keys + areas)
-request_object.raise_for_status()
+request_object.raise_for_status()       # raise an exception for error codes (4xx or 5xx)
 soup = bs4.BeautifulSoup(request_object.text, "lxml")
 
 # blacklist.txt is storage for accumulated craigslist links that I have already seen
 blacklist_file = open("/home/keith/blacklist.txt", 'a+')    # open for appending and reading but will set pointer to EOF
 blacklist_file.seek(0)  #set file pointer to beginning of file
 blacklist = blacklist_file.readlines()  # create list of pid's contained in blacklist_file
-blacklist = [x.strip() for x in blacklist]  # strip out \n's
-email = []
+blacklist = [x.strip() for x in blacklist]  # strip out \n' and other whitespace characters
+email = []      # initialize an empty list for use with accumulated/appended fields to go into the notification email
 
-try:
-    for i in range(len(soup.select('.rows li'))):
-        if soup.select('.rows li')[i].get('data-pid') not in blacklist: # don't want to see the pids in the blacklist
-            print(soup.select('.rows li')[i].p.a.text + "  " + soup.select('.rows li')[i].p.find('span', 'result-price').text)
-            print(soup.select('.rows li')[i].p.a.get('href'))       #link
-            print(soup.select('.rows li')[i].get('data-pid') + "\n")
-            email.append(soup.select('.rows li')[i].p.a.text + "  " + soup.select('.rows li')[i].p.find('span', 'result-price').text)
-            email.append(soup.select('.rows li')[i].p.a.get('href'))       #link
-            email.append(soup.select('.rows li')[i].get('data-pid') + "\n")
-            blacklist_file.write(soup.select('.rows li')[i].get('data-pid') + "\n") # got these now so put them in blacklist
-        continue
-except:
-    blacklist_file.close()
-    # exit()
+for i in range(len(soup.select('.rows li'))):
+    pid = soup.select('.rows li')[i].get('data-pid')
+    item = soup.select('.rows li')[i].p.a.text
+    try:    # sometimes people don't put a price on their listings!
+        price =soup.select('.rows li')[i].p.find('span', 'result-price').text
+    except:
+        price = "Price not found!"
+    link = soup.select('.rows li')[i].p.a.get('href')
+
+    if pid not in blacklist:    # don't want to see items already in the blacklist_file
+        print(item + "  " + price)
+        print(pid + "\n")
+        print(link)
+        email.append(item + "  " + price)
+        email.append(link)
+        email.append(pid + "\n")
+        blacklist_file.write(pid + "\n")    # Got these now so put in blacklist_file
+
 
 blacklist_file.close()
 
