@@ -1,16 +1,16 @@
 # EDIT THESE constants for your personal use
 # Email parameters- make sure you use the proper login, and you may need to use a dedicated "APP" password. CHECK your email provider!
 # For instance you can find instructions for google mail here: https://support.google.com/accounts/answer/185833?hl=en
-SMTP_SERVER = "smtp.fastmail.com"
+SMTP_SERVER = "smtp.email.com"
 SMTP_PORT = "587"
-SMTP_LOGIN = "jko@fastmail.com"
-SMTP_APP_PASSWORD = "jg44tvgn56qakhm7"
+SMTP_LOGIN = "keith@card16.com"
+SMTP_APP_PASSWORD = "xxxxxxxxxxxxxxxx"
 
 SEARCHES_FILE = "/home/keith/cl_searches.txt"   # optionally create this file with one search per line
 BLACKLIST_FILE = "/home/keith/cl_blacklist.txt" # file to accumulate the results from searches previously run
 
 # point the CL_URL to your local CraigsList by changing 'Louisville' in the following example to your local city:
-CITY = "Louisville" # CraigsList city, case insensitive
+CITY = "Louisville" # CraigsList location, case insensitive
 
 # areas are the craigslist 'nearby areas' that I want to search. NOTE this is continued to two lines using backslash
 # Play with CraigsList search "include nearby areas" using the drop-down menus to determine the areas you want to include
