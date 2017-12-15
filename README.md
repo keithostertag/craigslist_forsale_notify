@@ -14,11 +14,11 @@ Since CraigsList does not provide a public API, this script uses scraping to cap
 #### Benefits:
 1. Run it when and as many times as you like.  By contrast, the CraigsList 'Saved searches' function has an odd algorithm for when it runs, and you have no control.
 2. Won't repeat results as it keeps track of which items you have already seen.  By contrast, the CraigsList 'Saved searches' function will keep sending you the same items.
-3. Optionally- with the "-l" parameter you can receive search results when you don't or can't use your regular Internet email (uses your local system login as sender and recipient). 
+3. Optionally- with the "-l" parameter you can receive search results when you don't or can't use your regular Internet email (uses your local system login as sender and recipient).
 
 
 #### Requirements:
-1. Of course you need an email address and the correct SMTP info to access it.
+1. An email address and the correct SMTP info to access it, unless using the -l optional parameter
 2. Python3 running on Linux.
 3. These Python modules properly installed (generally with pip):  
   * requests
