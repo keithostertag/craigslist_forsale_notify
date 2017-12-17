@@ -1,33 +1,54 @@
-# Edit these constants for your personal use
-# SMTP parameters- make sure you use the proper login, and you may need to use a dedicated "APP" password.
-# Check your email provider for documentation.
-# For instance you can find instructions for google mail here: https://support.google.com/accounts/answer/185833?hl=en
-# These first four SMTP variable are NOT needed if you use the -l optional parameter for local mail only
-SMTP_SERVER = "smtp.email_provider.com"
+"""
+craigslist_forsale_notify (cl.py), by Keith Ostertag 12/2017, GNU General Public License v3.0
+https://github.com/keithostertag/craigslist_forsale_notify
+
+craigslist_forsale_notify is a small python3 script (running under Linux from the command line)
+which aims to replace the Craigs List email notification functionality of 'saved searches' for
+personal use of the "For Sale" category. This script is designed for and tested on Linux OS only.
+
+You must manually edit the following constants to the script for your personal use.
+
+SMTP parameters- make sure you use the proper login, and you may need to use a dedicated "APP" password.
+Check your email provider for documentation.
+For instance you can find instructions for google mail here: https://support.google.com/accounts/answer/185833?hl=en
+These first four SMTP variable are NOT needed if you use the -l optional parameter for local mail only
+
+If the first parameter you pass on the commandline is '-l' the script will use your local mail only
+to send you notification of search results. Uses yourl system login as sender and recipient.
+
+AREAS: the craigslist 'nearby areas' that you want to search.
+Play with CraigsList search "include nearby areas" using the drop-down menus to determine the areas you want to include
+
+CITY: CraigsList location you want to search
+
+BLACKLIST_FILE: a plain text file to accumulate the results from searches previously run
+the script will create this file at the path you give it- you must have read/write permisson to that path
+
+You might also want to read the CraigsList help page on how to search: https://www.craigslist.org/about/help/search
+
+See the README.md file for more details and examples.
+"""
+
+SMTP_SERVER = "smtp.emailserver.com"
 SMTP_PORT = "587"
-SMTP_LOGIN = "youremailaddress@email_provider.com"
+SMTP_LOGIN = "user@emailserver.com"
 SMTP_APP_PASSWORD = "xxxxxxxxxxxx"
 
 SEARCHES_FILE = "/home/user/cl_searches.txt"   # optionally create this file with one search per line
 BLACKLIST_FILE = "/home/user/cl_blacklist.txt" # file to accumulate the results from searches previously run
 
-# point the CL_URL to your local CraigsList by changing 'Louisville' in the following example to your local city:
 CITY = "Louisville" # CraigsList location, case insensitive
 
-# areas are the craigslist 'nearby areas' that I want to search.
-# NOTE this is continued to two lines using backslash
-# Play with CraigsList search "include nearby areas" using the drop-down menus to determine the areas you want to include
+
+# NOTE this is continued to two lines using the backslash
 AREAS = "&sort=rel&searchNearby=2&nearbyArea=229&nearbyArea=342&nearbyArea=" \
     "35&nearbyArea=227&nearbyArea=45&nearbyArea=133&nearbyArea=673"
 
-# You might also want to read the CraigsList help page on how to search: https://www.craigslist.org/about/help/search
-######### BE CERTAIN to edit the above variables correctly!
-#
+
 #####################    Nothing below this line needs editing for intended use    ##############
 
 import smtplib, sys, os
 import requests, bs4
-import smtplib
 import datetime
 
 def mail_it(email_payload):
