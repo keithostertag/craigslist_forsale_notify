@@ -144,7 +144,7 @@ if len(email) > 0:              # If empty no notification needed
 # OR if -l argument is passed just use local_mail_only function
 # NOTE I'm encoding as ascii here then decoding to unicode inside the mail_it function to deal with stray junk that sometimes happens in CraigsList posts
 
-    if sys.argv[1] == '-l':
+    if len(sys.argv) >0 and sys.argv[1] == '-l':
         local_mail_only(email)
     else:
         mail_it(email.encode('ascii','ignore'))
