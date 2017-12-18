@@ -8,7 +8,7 @@ Since CraigsList does not provide a public API, this script uses scraping to cap
 3. You run the script (from the command line or  with Crontab) with your search terms as command line arguments (separated by spaces).
 4. The script uses Requests to download the search results page then uses BeautifulSoup to scrape for the pid, item, price, and url of the results.
 5. The script then uses SMTP to send the results to your provided email address.
-6. The script also creates/appends a file which keeps track of the pid's so it won't send you them a second time on future searches.
+6. The script also creates/appends a BLACKLIST_FILE which keeps track of the pid's so it won't send you them a second time on future searches.
 7. Optionally- if you set the first commandline parameter to "-l" the script will only email your local user account (on your machine or potentially on your local private network).
 
 #### Benefits:
@@ -25,7 +25,7 @@ Since CraigsList does not provide a public API, this script uses scraping to cap
   * BeautifulSoup4
   * lxml
 
-4. A path to where the script can write to a file.
+4. A path to where the script can write the BLACKLIST_FILE file.
 
 #### Examples of how I use this script:
 There are a few items which appear on CraigsList infrequently that I like to follow over the course of several months. Here is an example of the content of my SEARCHES_FILE which I keep in my home directory:
