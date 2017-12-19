@@ -125,9 +125,8 @@ else:
     try:    # if no command line parameters, look for SEARCHES_FILE (which should have one search per line)
         f = open(SEARCHES_FILE)
         searches = f.readlines()
-        searches = [x.strip() for x in searches]
-        searches = list(filter(None, searches))   # in case there's empty strings left over from a trailing \n in file or other
         f.close()
+        searches = [x.strip() for x in searches if x != None]
     except:
             # alert for missing parameters AND no SEARCHES_FILE found! then exit
             print("\nExiting... failed to find search keys/parameters! No args and no cl_searches.txt!\n")
@@ -144,7 +143,7 @@ if len(email) > 0:              # If empty no notification needed
 # OR if -l argument is passed just use local_mail_only function
 # NOTE I'm encoding as ascii here then decoding to unicode inside the mail_it function to deal with stray junk that sometimes happens in CraigsList posts
 
-    if len(sys.argv) >0 and sys.argv[1] == '-l':
+    if len(sys.argv) >= 2 and sys.argv[1] == '-l':
         local_mail_only(email)
     else:
         mail_it(email.encode('ascii','ignore'))
