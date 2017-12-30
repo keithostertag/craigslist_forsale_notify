@@ -1,11 +1,11 @@
-**craigslist_forsale_notify** is a small python3 script (running under Linux from the command line) which aims to replace the Craigs List email notification functionality of 'saved searches' for personal use of the "For Sale" category. This script is designed for and tested on Linux OS only, but can likely be easily modified for other OS's. Support for English only. Probably wouldn't be difficult to modify to search other categories, but I leave that to you.
+**craigslist_forsale_notify** is a small python3 script (running under Linux from the command line) which aims to replace the Craigs List email notification functionality of 'saved searches' for personal use of the "For Sale" category. This script is designed for and tested on Linux OS only, but can likely be easily modified for other OS's. Support for English only. Probably wouldn't be difficult to modify to search other categories, but I leave that to you. Can also easily be edited to access other CL sections, like Apartments!
 
 Since CraigsList does not provide a public API, this script uses scraping to capture information. This script will need to be modified if CraigsList changes their page/data structure.
 
 #### Overview of how it works:
 1. You setup the requirements on your system.
-2. You edit the script to include the location and nearby areas you want to search, plus your correct SMTP server and email information.
-3. You run the script (from the command line or  with Crontab) with your search terms as command line arguments (separated by spaces).
+2. You edit the cl_settings file to include the location and nearby areas you want to search, plus your correct SMTP server and email information.
+3. You run the script (from the command line or with Crontab) with your search terms as command line arguments (separated by spaces).
 4. The script uses Requests to download the search results page then uses BeautifulSoup to scrape for the pid, item, price, and url of the results.
 5. The script then uses SMTP to send the results to your provided email address.
 6. The script also creates/appends a BLACKLIST_FILE which keeps track of the pid's so it won't send you them a second time on future searches.
@@ -49,9 +49,9 @@ Or just run it manually from the command line whenever:
 keith@ada:~/code/cl$ python3 cl.py "pink floyd" "concert tickets"
 ```  
 
-Though typically I just let in run from the crontab once a day.
+Though typically I just let in run from the crontab once a day (or even hourly sometimes).
 
-When I don't want to run an email client or for some reason don't want the results sent to my regular Internet email I just use the  optional "-l" parameter on the comandline and use my system mail, as follows:
+When I don't want to run an email client or for some reason don't want the results sent to my regular Internet email I just use the  optional "-l" parameter on the commandline and use my system mail, as follows:
 
 ```
 keith@ada:~$ python3 cl.py -l "dell latitude i7"
